@@ -1,8 +1,6 @@
 package com.company.homework1;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 
 
 /**
@@ -11,17 +9,17 @@ import java.io.IOException;
 public class XorFileDecoder implements FileDecoder {
     public String decode(String inputFilePath) {
         String res;
-        try (FileInputStream fin = new FileInputStream(inputFilePath)) {
-            byte prev[] = new byte[1];
-            byte curr[] = new byte[1];
-            if (fin.read(prev) == -1)
+        File file_fin=new File(inputFilePath);
+        try (BufferedInputStream fin = new BufferedInputStream(new FileInputStream(inputFilePath))){
+            byte arr[]=new byte[((int) file_fin.length())+1];
+            int iterator=0;
+            if (fin.read(arr,iterator++,1) == -1)
                 return "Empty file";
-            res = (new String(prev));
-            while (fin.read(curr) != -1) {
-                curr[0] ^= prev[0];
-                res += (new String(curr));
-                prev[0] = curr[0];
+            while (fin.read(arr,iterator,1) != -1){
+                arr[iterator] ^= arr[iterator-1];
+                iterator++;
             }
+            res=new String(arr);
         } catch (FileNotFoundException e) {
             return "Heвoзмoжнo найти файл" + e;
         } catch (IOException e) {
