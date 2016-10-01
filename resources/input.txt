@@ -1,0 +1,6 @@
+3
+Some line
+    Some other line with spaces in the beginning and in the end
+Last line
+
+All files from resources folder are placed to clsspath (see /out folder)
