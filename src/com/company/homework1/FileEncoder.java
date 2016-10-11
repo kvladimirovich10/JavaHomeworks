@@ -5,8 +5,8 @@ public interface FileEncoder {
     /**
      * Encode inputFile writing the result to outputFile
      *
-     * @param inputFilePath     - input file path (relative to resources folder)
-     * @param outputFilePath    - output file path (relative to resources folder)
+     * @param inputFilePath  - input file path (relative to resources folder)
+     * @param outputFilePath - output file path (relative to resources folder)
      */
     void endcode(String inputFilePath, String outputFilePath);
 

@@ -1,5 +1,6 @@
 package com.company.homework1;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Task {
@@ -15,7 +16,15 @@ public class Task {
 
         // 3) Create XorFileDecoder implementing FileDecoder interface
         FileDecoder decoder = new XorFileDecoder();
-        String result = decoder.decode(outputFilePath);
-        System.out.println(result);
+        String result;
+        try {
+            result = decoder.decode(outputFilePath);
+            System.out.println(result);
+        } catch (FileNotFoundException e) {
+            System.out.println(e);
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+
     }
 }
