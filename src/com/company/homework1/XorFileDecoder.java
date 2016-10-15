@@ -12,12 +12,9 @@ public class XorFileDecoder implements FileDecoder {
         File file_fin = new File(inputFilePath);
         try (BufferedInputStream fin = new BufferedInputStream(new FileInputStream(inputFilePath))) {
             byte arr[] = new byte[((int) file_fin.length()) + 1];
-            int iterator = 0;
-            if (fin.read(arr, iterator++, 1) == -1)
-                return "Empty file";
-            while (fin.read(arr, iterator, 1) != -1) {
-                arr[iterator] ^= arr[iterator - 1];
-                iterator++;
+            fin.read(arr);
+            for (int i = 1; i < arr.length; i++) {
+                arr[i] ^= arr[i - 1];
             }
             res = new String(arr);
         }
