@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 /**
- * Created by техно on 28.10.2016.
+ * Created by lomdji on 28.10.2016.
  */
 public class Matrix implements Serializable {
     Matrix(int Height,int Width, double value){
@@ -18,9 +18,6 @@ public class Matrix implements Serializable {
     Matrix(int Size, double value){
         this(Size, Size, value);
     }
-    Matrix(int Height, int Width){
-        this(Height, Width, 0);
-    }
     Matrix(){
         Width=Height=0;
     }
@@ -28,6 +25,14 @@ public class Matrix implements Serializable {
     Matrix(int Height, int Width,double[][] value) {
         this.Width=Width;
         this.Height = Height;
+        Matr=new double[Height][Width];
+        for(int i=0;i!=Height;i++)
+            for(int j=0;j!=Width;j++)
+                Matr[i][j]=value[i][j];
+    }
+    Matrix(double[][] value) {
+        this.Width=value[0].length;
+        this.Height = value.length;
         Matr=new double[Height][Width];
         for(int i=0;i!=Height;i++)
             for(int j=0;j!=Width;j++)
