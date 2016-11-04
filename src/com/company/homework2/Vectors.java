@@ -4,7 +4,7 @@ package com.company.homework2;
  * Created by ����� on 29.10.2016.
  */
 public class Vectors extends Matrix{
-    Vectors() {
+    Vectors(){
         super();
         IsDirectionVertical=true;
     }
@@ -43,5 +43,16 @@ public class Vectors extends Matrix{
         return Matr[1][Ind];
     }
 
+    @Override
+    public String toString() {
+        String Res=new String();
+        if(IsDirectionVertical)
+            for(int i=0;i!=Height;i++)
+                Res+=Matr[i][0]+'\n';
+        else
+            for(int i=0;i!=Width;i++)
+                Res+=Matr[0][i];
+        return Res;
+    }
     boolean IsDirectionVertical;
 }

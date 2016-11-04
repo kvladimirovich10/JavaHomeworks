@@ -1,6 +1,7 @@
 package com.company.homework2;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Created by техно on 28.10.2016.
@@ -73,6 +74,15 @@ public class Matrix implements Serializable {
         }
         return new Matrix(Width,Height,a);
     }
+
+    @Override
+    public String toString() {
+        String Res =new String();
+        for(int i=0;i!=Height;i++)
+            Res+=Arrays.toString(Matr[i])+'\n';
+        return Res;
+    }
+
     protected int Width;
     protected int  Height;
     protected double[][] Matr;
