@@ -1,6 +1,6 @@
 package com.company.homework2;
 
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Created by lomdji on 31.10.2016.
@@ -66,7 +66,17 @@ public class Main {
             System.out.println(e);
         }
         //3) Serialization. Output in file.
-
+        try(ObjectOutputStream Obout=new ObjectOutputStream(new FileOutputStream("resources/out.txt"))){
+            Obout.writeObject(A);
+        }
         //4) Deserialization. Input from file.
+        try(ObjectInputStream Inout=new ObjectInputStream(new FileInputStream("resources/out.txt"))){
+            Matrix[] X = null;
+            X = (Matrix[])Inout.readObject();
+            for(Object I:X)
+                System.out.println(I);
+            }catch (ClassNotFoundException e) {
+                e.printStackTrace();
+        }
     }
 }
