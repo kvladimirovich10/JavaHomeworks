@@ -4,10 +4,6 @@ package com.company.homework2;
  * Created by Lomdji on 29.10.2016.
  */
 public class Vectors extends Matrix{
-    Vectors(){
-        super();
-        IsDirectionVertical=true;
-    }
     Vectors(int Size, double Value) {
         super(Size,1,Value);
         IsDirectionVertical=true;
@@ -18,7 +14,7 @@ public class Vectors extends Matrix{
     }
     Vectors(Matrix Base){
         if(Base.Width!=1 && Base.Height!=1)
-            throw new MatrixException();
+            throw new MatrixException("Error in Vector Constructor: Bots sizes of BaseMatrix not 1 ");
         else{
             Width=Base.Width; Height=Base.Height;
             Matr=new double[Height][Width];
@@ -28,17 +24,20 @@ public class Vectors extends Matrix{
             IsDirectionVertical=Width==1?true:false;
         }
     }
-    public Vectors Summ(Vectors A) {
-        return new Vectors (new Matrix(A.Height, A.Width, A.Matr).Summ(new Matrix(Height, Width, Matr)));
+    public Vectors Sum(Vectors A) {
+        return new Vectors (new Matrix(A.Height, A.Width, A.Matr).Sum(new Matrix(Height, Width, Matr)));
     }
-    public Vectors Mull(Vectors A) {
-        return new Vectors (new Matrix(A.Height, A.Width, A.Matr).Mull(new Matrix(Height, Width, Matr)));
+    public Matrix Mull(Vectors A) {
+        return new Matrix(A.Height, A.Width, A.Matr).Mull(new Matrix(Height, Width, Matr));
     }
     public Vectors Transp() {
         return new Vectors(new Matrix(Height,Width,Matr).Transp());
     }
     public double GetComponentByInd(int Ind) {
-        return Matr[1][Ind];
+        if(IsDirectionVertical)
+            return Matr[Ind][0];
+        else
+            return Matr[0][Ind];
     }
     boolean IsDirectionVertical;
 }
