@@ -8,33 +8,31 @@ import java.io.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         //1)Creating objects. Output.
-        Matrix [] A =new Matrix[5];
-        A[0]=new Matrix(3,3,2);
-        A[1]=new Matrix(3,1);
-        double[][] c={{3,4},{2,1}};
-        A[2]=new Matrix(c);
-        double[] d={1,2,3,4};
-        A[3]=new Matrix(2,2,d);
-        A[4]=new Matrix(4,1,d);
+        Matrix[] A = new Matrix[5];
+        A[0] = new Matrix(3, 3, 2);
+        A[1] = new Matrix(3, 1);
+        double[][] c = {{3, 4}, {2, 1}};
+        A[2] = new Matrix(c);
+        double[] d = {1, 2, 3, 4};
+        A[3] = new Matrix(2, 2, d);
+        A[4] = new Matrix(4, 1, d);
         //Error!
-        try{
-            Matrix E=new Matrix(0,3,d);
-        }
-        catch (MatrixException e) {
+        try {
+            Matrix E = new Matrix(0, 3, d);
+        } catch (MatrixException e) {
             System.out.println(e);
         }
 
 
-        Vectors [] V=new Vectors[4];
-        V[0]=new Vectors(3,2.1);
-        V[1]=new Vectors(d);
-        V[2]=new Vectors(A[4]);
-        V[3]=V[2].Transp();
+        Vector[] V = new Vector[4];
+        V[0] = new Vector(3, 2.1);
+        V[1] = new Vector(d);
+        V[2] = new Vector(A[4]);
+        V[3] = V[2].Transp();
         //Error!
         try {
-            Vectors E =new Vectors(A[3]);
-        }
-        catch (MatrixException e) {
+            Vector E = new Vector(A[3]);
+        } catch (MatrixException e) {
             System.out.println(e);
         }
 
@@ -42,7 +40,7 @@ public class Main {
         for (Matrix I : A)
             System.out.println(I);
 
-        for (Vectors I : V)
+        for (Vector I : V)
             System.out.println(I);
 
 
@@ -52,31 +50,33 @@ public class Main {
         System.out.println(V[2].Mull(V[3]));
         System.out.println(V[3].Mull(V[2]));
         //error
-        try{
+        try {
             System.out.println(V[0].Sum(V[1]));
             System.out.println(V[0].Mull(V[1]));
-        }
-        catch (MatrixException e) {
+        } catch (MatrixException e) {
             System.out.println(e);
         }
-       try{
+        try {
             System.out.println(V[0].Mull(V[1]));
-       }
-        catch (MatrixException e) {
+        } catch (MatrixException e) {
             System.out.println(e);
         }
         //3) Serialization. Output in file.
-        try(ObjectOutputStream Obout=new ObjectOutputStream(new FileOutputStream("resources/out.txt"))){
+        try (ObjectOutputStream Obout = new ObjectOutputStream(new FileOutputStream("resources/out.txt"))) {
             Obout.writeObject(A);
         }
         //4) Deserialization. Input from file.
-        try(ObjectInputStream Inout=new ObjectInputStream(new FileInputStream("resources/out.txt"))){
+        try (ObjectInputStream Inout = new ObjectInputStream(new FileInputStream("resources/out.txt"))) {
             Matrix[] X = null;
-            X = (Matrix[])Inout.readObject();
-            for(Object I:X)
+            X = (Matrix[]) Inout.readObject();
+            for (Object I : X)
                 System.out.println(I);
-            }catch (ClassNotFoundException e) {
-                e.printStackTrace();
+            if (X[0] == A[0])
+                System.out.println("==Compare by references");
+            if (X[0].equals(A[0]))
+                System.out.println("Compare by default equals Ok");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }
