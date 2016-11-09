@@ -20,7 +20,7 @@ public class Main {
         try {
             Matrix E = new Matrix(0, 3, d);
         } catch (MatrixException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
 
@@ -28,12 +28,12 @@ public class Main {
         V[0] = new Vector(3, 2.1);
         V[1] = new Vector(d);
         V[2] = new Vector(A[4]);
-        V[3] = V[2].Transp();
+        V[3] = V[2].transp();
         //Error!
         try {
             Vector E = new Vector(A[3]);
         } catch (MatrixException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         //output
@@ -45,21 +45,21 @@ public class Main {
 
 
         //2) Operation and output of res. Vectors operation Based on matrix Operations, so I demonstrate only Vectors
-        System.out.println(V[0].Sum(V[0]));
-        System.out.println(V[0].Sum(V[0]).Transp());
-        System.out.println(V[2].Mull(V[3]));
-        System.out.println(V[3].Mull(V[2]));
+        System.out.println(V[0].sum(V[0]));
+        System.out.println(V[0].sum(V[0]).transp());
+        System.out.println(V[2].mull(V[3]));
+        System.out.println(V[3].mull(V[2]));
+        System.out.println(V[3].dot(V[2]));
         //error
         try {
-            System.out.println(V[0].Sum(V[1]));
-            System.out.println(V[0].Mull(V[1]));
+            System.out.println(V[0].sum(V[1]));
         } catch (MatrixException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         try {
-            System.out.println(V[0].Mull(V[1]));
+            System.out.println(V[0].mull(V[1]));
         } catch (MatrixException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         //3) Serialization. Output in file.
         try (ObjectOutputStream Obout = new ObjectOutputStream(new FileOutputStream("resources/out.txt"))) {
@@ -67,14 +67,13 @@ public class Main {
         }
         //4) Deserialization. Input from file.
         try (ObjectInputStream Inout = new ObjectInputStream(new FileInputStream("resources/out.txt"))) {
-            Matrix[] X = null;
+            Matrix[] X;
             X = (Matrix[]) Inout.readObject();
-            for (Object I : X)
-                System.out.println(I);
-            if (X[0] == A[0])
-                System.out.println("==Compare by references");
-            if (X[0].equals(A[0]))
-                System.out.println("Compare by default equals Ok");
+            boolean isEquals = true;
+            for (int i = 0; i != X.length; i++)
+                if (!X[i].equals(A[i]))
+                    isEquals = false;
+            System.out.println("Are Matrix Equals after Serialization:  "+isEquals);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

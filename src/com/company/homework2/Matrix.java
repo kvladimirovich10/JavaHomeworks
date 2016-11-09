@@ -7,19 +7,19 @@ import java.util.Arrays;
  * Created by lomdji on 28.10.2016.
  */
 public class Matrix implements Serializable {
-    protected int Width;
-    protected int Height;
-    protected double[][] Matr;
+    protected int width;
+    protected int height;
+    protected double[][] matr;
 
-    Matrix(int Height, int Width, double value) {
-        if (Height == 0 || Width == 0)
+    Matrix(int height, int width, double value) {
+        if (height == 0 || width == 0)
             throw new MatrixException("Error constructor arguments");
-        this.Width = Width;
-        this.Height = Height;
-        Matr = new double[Height][Width];
-        for (int i = 0; i != Height; i++)
-            for (int j = 0; j != Width; j++)
-                Matr[i][j] = value;
+        this.width = width;
+        this.height = height;
+        matr = new double[height][width];
+        for (int i = 0; i != height; i++)
+            for (int j = 0; j != width; j++)
+                matr[i][j] = value;
     }
 
     Matrix(int Size, double value) {
@@ -30,64 +30,64 @@ public class Matrix implements Serializable {
     }
 
     //Constructor
-    Matrix(int Height, int Width, double[][] value) throws MatrixException {
-        if (Height == 0 || Width == 0 || value.length < Height || value[0].length < Width)
+    Matrix(int height, int width, double[][] value) throws MatrixException {
+        if (height == 0 || width == 0 || value.length < height || value[0].length < width)
             throw new MatrixException("Error constructor arguments");
-        this.Width = Width;
-        this.Height = Height;
-        Matr = new double[Height][Width];
-        for (int i = 0; i != Height; i++)
-            for (int j = 0; j != Width; j++)
-                Matr[i][j] = value[i][j];
+        this.width = width;
+        this.height = height;
+        matr = new double[height][width];
+        for (int i = 0; i != height; i++)
+            for (int j = 0; j != width; j++)
+                matr[i][j] = value[i][j];
     }
 
     Matrix(double[][] value) {
         this(value.length, value[0].length, value);
     }
 
-    Matrix(int Height, int Width, double[] value) {
-        if (value.length < Height * Width || Height == 0 || Width == 0)
+    Matrix(int height, int width, double[] value) {
+        if (value.length < height * width || height == 0 || width == 0)
             throw new MatrixException("Error constructor arguments");
-        this.Width = Width;
-        this.Height = Height;
-        Matr = new double[Height][Width];
-        for (int i = 0; i != Height; i++)
-            for (int j = 0; j != Width; j++)
-                Matr[i][j] = value[i * Width + j];
+        this.width = width;
+        this.height = height;
+        matr = new double[height][width];
+        for (int i = 0; i != height; i++)
+            for (int j = 0; j != width; j++)
+                matr[i][j] = value[i * width + j];
     }
 
-    public Matrix Sum(Matrix A) throws MatrixException {
+    public Matrix sum(Matrix A) throws MatrixException {
         //Check if exception
-        if (A.Width != Width || A.Height != Height)
+        if (A.width != width || A.height != height)
             throw new MatrixException("Error sum arguments");
-        double[][] a = new double[A.Height][A.Width];
-        for (int i = 0; i < A.Height; i++) {
-            for (int j = 0; j < A.Width; j++)
-                a[i][j] = A.Matr[i][j] + Matr[i][j];
+        double[][] a = new double[A.height][A.width];
+        for (int i = 0; i < A.height; i++) {
+            for (int j = 0; j < A.width; j++)
+                a[i][j] = A.matr[i][j] + matr[i][j];
         }
-        return new Matrix(Height, Width, a);
+        return new Matrix(height, width, a);
     }
 
-    public Matrix Mull(Matrix A) throws MatrixException {
-        if (A.Width != Height)
+    public Matrix mull(Matrix A) throws MatrixException {
+        if (A.width != height)
             throw new MatrixException("Error mull arguments");
-        double a[][] = new double[Height][A.Width];
-        for (int i = 0; i != Height; i++)
-            for (int j = 0; j != A.Width; j++) {
+        double a[][] = new double[height][A.width];
+        for (int i = 0; i != height; i++)
+            for (int j = 0; j != A.width; j++) {
                 a[i][j] = 0;
-                for (int r = 0; r != Width; r++)
-                    a[i][j] += Matr[i][r] * A.Matr[r][j];
+                for (int r = 0; r != width; r++)
+                    a[i][j] += matr[i][r] * A.matr[r][j];
             }
-        return new Matrix(Height, A.Width, a);
+        return new Matrix(height, A.width, a);
     }
 
-    public Matrix Transp() {
-        double[][] a = new double[Width][Height];
-        for (int i = 0; i < Height; i++) {
-            for (int j = 0; j < Width; j++)
-                a[j][i] = Matr[i][j];
+    public Matrix transp() {
+        double[][] a = new double[width][height];
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++)
+                a[j][i] = matr[i][j];
         }
-        return new Matrix(Width, Height, a);
+        return new Matrix(width, height, a);
     }
 
     @Override
@@ -95,27 +95,27 @@ public class Matrix implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Matrix matrix = (Matrix) o;
+        Matrix Matrix = (Matrix) o;
 
-        if (Width != matrix.Width) return false;
-        if (Height != matrix.Height) return false;
-        return Arrays.deepEquals(Matr, matrix.Matr);
+        if (width != Matrix.width) return false;
+        if (height != Matrix.height) return false;
+        return Arrays.deepEquals(matr, Matrix.matr);
 
     }
 
     @Override
     public int hashCode() {
-        int result = Width;
-        result = 31 * result + Height;
-        result = 31 * result + (Matr != null ? Arrays.deepHashCode(Matr) : 0);
+        int result = width;
+        result = 31 * result + height;
+        result = 31 * result + (matr != null ? Arrays.deepHashCode(matr) : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        String Res = new String();
-        for (int i = 0; i != Height; i++)
-            Res += Arrays.toString(Matr[i]) + '\n';
-        return Res;
+        String res = new String();
+        for (int i = 0; i != height; i++)
+            res += Arrays.toString(matr[i]) + '\n';
+        return res;
     }
 }

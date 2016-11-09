@@ -4,49 +4,55 @@ package com.company.homework2;
  * Created by Lomdji on 29.10.2016.
  */
 public class Vector extends Matrix {
-    boolean IsDirectionVertical = true;
+    boolean isDirectionVertical = true;
 
-    Vector(int Size, double Value) {
-        super(Size, 1, Value);
+    Vector(int size, double value) {
+        super(size, 1, value);
     }
 
-    Vector(double Value[]) {
-        super(Value.length, 1, Value);
+    Vector(double value[]) {
+        super(value.length, 1, value);
     }
 
-    Vector(Matrix Base) {
-        if (Base.Width != 1 && Base.Height != 1)
-            throw new MatrixException("Error in Vector Constructor: Bots sizes of BaseMatrix not 1 ");
+    Vector(Matrix base) {
+        if (base.width != 1 && base.height != 1)
+            throw new MatrixException("Error in Vector Constructor: Bots sizes of baseMatrix not 1 ");
         else {
-            Width = Base.Width;
-            Height = Base.Height;
-            Matr = new double[Height][Width];
-            for (int i = 0; i != Height; i++)
-                for (int j = 0; j != Width; j++)
-                    Matr[i][j] = Base.Matr[i][j];
-            IsDirectionVertical = Width == 1 ? true : false;
+            width = base.width;
+            height = base.height;
+            matr = new double[height][width];
+            for (int i = 0; i != height; i++)
+                for (int j = 0; j != width; j++)
+                    matr[i][j] = base.matr[i][j];
+            isDirectionVertical = width == 1 ? true : false;
         }
     }
 
-    public Vector Sum(Vector A) {
-        return new Vector(super.Sum(A));
+    public Vector sum(Vector A) {
+        return new Vector(super.sum(A));
     }
 
-    //—кал€рное произведение
-    /*public double dot(Vector A) {
-        int size=Math.max(Math.max(Height,Width),Math.max(A.Height,A.Width))
-        for(int i=0;i!=
-    }*/
-
-    public Vector Transp() {
-        return new Vector(super.Transp());
+    //Scalar
+    public double dot(Vector A) throws MatrixException{
+        int size1=(isDirectionVertical?height:width);
+        int size2=(A.isDirectionVertical?A.height:A.width);
+        if(size1!=size2)
+            throw new MatrixException("Not equal vectors sizes");
+        double res=0;
+        for(int i=0;i!=size1;i++)
+            res+=this.getComponentByInd(i)*A.getComponentByInd(i);
+        return res;
     }
 
-    public double GetComponentByInd(int Ind) {
-        if (IsDirectionVertical)
-            return Matr[Ind][0];
+    public Vector transp() {
+        return new Vector(super.transp());
+    }
+
+    public double getComponentByInd(int ind) {
+        if (isDirectionVertical)
+            return matr[ind][0];
         else
-            return Matr[0][Ind];
+            return matr[0][ind];
     }
 
 }
