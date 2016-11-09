@@ -73,7 +73,7 @@ public class Main {
             for (int i = 0; i != X.length; i++)
                 if (!X[i].equals(A[i]))
                     isEquals = false;
-            System.out.println("Are Matrix Equals after Serialization:  "+isEquals);
+            System.out.println("Are Matrix Equals after Serialization: "+isEquals);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
