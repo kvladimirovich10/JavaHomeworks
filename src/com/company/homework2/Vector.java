@@ -33,14 +33,14 @@ public class Vector extends Matrix {
     }
 
     //Scalar
-    public double dot(Vector A) throws MatrixException{
-        int size1=(isDirectionVertical?height:width);
-        int size2=(A.isDirectionVertical?A.height:A.width);
-        if(size1!=size2)
+    public double dot(Vector A) throws MatrixException {
+        int size1 = (isDirectionVertical ? height : width);
+        int size2 = (A.isDirectionVertical ? A.height : A.width);
+        if (size1 != size2)
             throw new MatrixException("Not equal vectors sizes");
-        double res=0;
-        for(int i=0;i!=size1;i++)
-            res+=this.getComponentByInd(i)*A.getComponentByInd(i);
+        double res = 0;
+        for (int i = 0; i != size1; i++)
+            res += this.getComponentByInd(i) * A.getComponentByInd(i);
         return res;
     }
 

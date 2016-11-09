@@ -62,18 +62,18 @@ public class Main {
             e.printStackTrace();
         }
         //3) Serialization. Output in file.
-        try (ObjectOutputStream Obout = new ObjectOutputStream(new FileOutputStream("resources/out.txt"))) {
-            Obout.writeObject(A);
+        try (ObjectOutputStream obOut = new ObjectOutputStream(new FileOutputStream("resources/out.txt"))) {
+            obOut.writeObject(A);
         }
         //4) Deserialization. Input from file.
-        try (ObjectInputStream Inout = new ObjectInputStream(new FileInputStream("resources/out.txt"))) {
+        try (ObjectInputStream inPut = new ObjectInputStream(new FileInputStream("resources/out.txt"))) {
             Matrix[] X;
-            X = (Matrix[]) Inout.readObject();
+            X = (Matrix[]) inPut.readObject();
             boolean isEquals = true;
             for (int i = 0; i != X.length; i++)
                 if (!X[i].equals(A[i]))
                     isEquals = false;
-            System.out.println("Are Matrix Equals after Serialization: "+isEquals);
+            System.out.println("Are Matrix Equals after Serialization: " + isEquals);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
