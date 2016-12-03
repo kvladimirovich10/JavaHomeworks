@@ -5,14 +5,20 @@ package com.company.homework3;
  */
 import java.util.Iterator;
 
-public class ArrayStack<T> implements Stack<T> {
-    private T[] Array;
+import static java.lang.System.arraycopy;
 
-    public ArrayStack() {
+public class ArrayStack<T> implements Stack<T> {
+    private Object[] array;
+    private int size=0;
+
+    public ArrayStack(int capacity) {
+        array=new Object[capacity];
     }
+
     // Constructor by Base
     public ArrayStack(T[] Base) {
-        Array=Base.clone();
+        array=Base.clone();
+        size=Base.length;
     }
 
     @Override
@@ -43,6 +49,12 @@ public class ArrayStack<T> implements Stack<T> {
     @Override
     public Iterator<T> iterator() {
         throw new UnsupportedOperationException();
+    }
+
+    private void enlarge(int new_size) {
+        Object[] tmp=new Object[new_size];
+        arraycopy(array,0,tmp,0,array.length);
+        array=tmp;
     }
 
 }
