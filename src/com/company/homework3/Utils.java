@@ -5,6 +5,7 @@ package com.company.homework3;
  */
 
 import java.util.Random;
+
 public class Utils {
     public static Integer[] randomArray(int size) {
         Random random = new Random();

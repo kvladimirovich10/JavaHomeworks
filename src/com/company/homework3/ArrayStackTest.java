@@ -3,6 +3,7 @@ package com.company.homework3;
 /**
  * Created by Lomdji on 03.12.2016.
  */
+
 import org.apache.commons.collections4.IteratorUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,8 +13,8 @@ import org.junit.runners.BlockJUnit4ClassRunner;
 import java.lang.reflect.Field;
 import java.util.EmptyStackException;
 
-import static org.junit.Assert.*;
 import static com.company.homework3.Utils.randomArray;
+import static org.junit.Assert.*;
 
 @RunWith(BlockJUnit4ClassRunner.class)
 public class ArrayStackTest {
