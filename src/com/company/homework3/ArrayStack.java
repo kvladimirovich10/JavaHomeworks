@@ -11,7 +11,7 @@ import static java.lang.System.arraycopy;
 
 public class ArrayStack<T> implements Stack<T> {
     private Object[] array;
-    private long size = 0;
+    private int size = 0;
 
     public ArrayStack() {
         array = new Object[2];
@@ -19,20 +19,21 @@ public class ArrayStack<T> implements Stack<T> {
 
     @Override
     public T push(T item) {
-        if (size == array.length) {
-            Object[] tmp = new Object[(int) size * 2];
-            arraycopy(array, 0, tmp, 0, (int) size);
-            array = tmp;
-        }
-        array[(int) size++] = item;
+        if (size == array.length)
+            resize_stack(size * 2);
+        array[size++] = item;
         return item;
     }
 
     @Override
     public T pop() {
-        if (size != 0)
-            return (T) array[(int) --size];
-        else
+        if (size != 0) {
+            T tmp = (T) array[--size];
+            array[size] = null;
+            if (size < array.length / 4)
+                resize_stack(array.length / 2 + 1);
+            return tmp;
+        } else
             throw new EmptyStackException();
 
     }
@@ -40,7 +41,7 @@ public class ArrayStack<T> implements Stack<T> {
     @Override
     public T peek() {
         if (size != 0)
-            return (T) array[(int) (size - 1)];
+            return (T) array[(size - 1)];
         else
             throw new EmptyStackException();
     }
@@ -52,13 +53,13 @@ public class ArrayStack<T> implements Stack<T> {
 
     @Override
     public long getSize() {
-        return size;
+        return (long) size;
     }
 
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
-            long current = 0;
+            int current = 0;
 
             public boolean hasNext() {
                 return (current < size);
@@ -66,8 +67,14 @@ public class ArrayStack<T> implements Stack<T> {
 
             @Override
             public T next() {
-                return (T) array[(int) current++];
+                return (T) array[current++];
             }
         };
+    }
+
+    private void resize_stack(int nsize) {
+        Object[] tmp = new Object[nsize];
+        arraycopy(array, 0, tmp, 0, size);
+        array = tmp;
     }
 }
