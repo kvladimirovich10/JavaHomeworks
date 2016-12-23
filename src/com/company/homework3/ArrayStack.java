@@ -35,7 +35,6 @@ public class ArrayStack<T> implements Stack<T> {
             return tmp;
         } else
             throw new EmptyStackException();
-
     }
 
     @Override
@@ -60,11 +59,9 @@ public class ArrayStack<T> implements Stack<T> {
     public Iterator<T> iterator() {
         return new Iterator<T>() {
             int current = 0;
-
             public boolean hasNext() {
                 return (current < size);
             }
-
             @Override
             public T next() {
                 return (T) array[current++];
