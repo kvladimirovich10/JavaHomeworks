@@ -30,6 +30,7 @@ public class MatrixGenerationUtils {
         // TODO: place your code here
         Random random = new Random();
         double[][] matrix = new double[rows][cols];
+        
 
 
         return null;
