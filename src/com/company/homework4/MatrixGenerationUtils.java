@@ -34,7 +34,11 @@ public class MatrixGenerationUtils {
         Consumer[] consumer=new Consumer[threadsCount];
         for (Consumer cons:consumer) {
             cons=new Consumer(conveyer);
-            cons.start();
+            try {
+                cons.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
