@@ -30,9 +30,12 @@ public class MatrixGenerationUtils {
         // TODO: place your code here
         Random random = new Random();
         double[][] matrix = new double[rows][cols];
-        
-
-
+        Conveyor conveyer=new Conveyor(matrix);
+        Consumer[] consumer=new Consumer[threadsCount];
+        for (Consumer cons:consumer) {
+            cons=new Consumer(conveyer);
+            cons.start();
+        }
         return null;
     }
 
