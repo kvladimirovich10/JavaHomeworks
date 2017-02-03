@@ -1,8 +1,7 @@
-package com.company.homework4;
-
-/**
+package com.company.homework4; /**
  * Created by Lomdji on 24.12.2016.
  */
+
 import java.util.concurrent.TimeUnit;
 
 import static com.company.homework4.MatrixGenerationUtils.*;
@@ -10,7 +9,7 @@ import static com.company.homework4.MatrixGenerationUtils.*;
 public class MatrixGenerationTests {
 
     public static void main(String[] args) {
-        int[] rowSizes = new int[] {1, 2, 3, 4, 5, 6, 7, 8, 20 };
+        int[] rowSizes = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 20};
         int cols = 10_000_000;
 
         warmup();
@@ -22,7 +21,7 @@ public class MatrixGenerationTests {
             long time2 = mesureTimeNs(() -> generateMatrixParallelRows(rows, cols));
             long time1Ms = TimeUnit.NANOSECONDS.toMillis(time1);
             long time2Ms = TimeUnit.NANOSECONDS.toMillis(time2);
-            float ratio = ((float)time2) / time1;
+            float ratio = ((float) time2) / time1;
 
             System.out.format("%2d    %17d   %17d       %f\n", rows, time1Ms, time2Ms, ratio);
         }
@@ -32,7 +31,7 @@ public class MatrixGenerationTests {
     private static void warmup() {
         System.out.println("Warming up start");
         for (int i = 0; i < 100; i++) {
-            if(i % 20 == 0)
+            if (i % 20 == 0)
                 System.out.println(i + "%");
             generateMatrix(4, 100_000);
             generateMatrixParallelRows(2, 100_000);
@@ -84,5 +83,4 @@ public class MatrixGenerationTests {
             Math.pow(ds[i], ds[i]);
         }
     }
-
 }

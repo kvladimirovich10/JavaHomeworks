@@ -1,4 +1,5 @@
 package com.company.homework4;
+
 import java.util.Random;
 
 /**
@@ -26,25 +27,28 @@ public class MatrixGenerationUtils {
      * @param threadsCount number of threads to use during generation
      * @return generated matrix
      */
+    //Version Consumer-Conveyor;
     public static double[][] generateMatrixParallelRows(int rows, int cols, int threadsCount) {
         // TODO: place your code here
-        Random random = new Random();
+        //Random random = new Random();
         double[][] matrix = new double[rows][cols];
-        Conveyor conveyer=new Conveyor(matrix);
-        Consumer[] consumer=new Consumer[threadsCount];
-        for (Consumer cons:consumer) {
-            cons=new Consumer(conveyer);
+        Conveyor conveyer = new Conveyor(matrix);
+        Consumer[] consumer = new Consumer[threadsCount];
+        for (int i = 0; i < consumer.length; i++) {
+            consumer[i] = new Consumer(conveyer);
+        }
+        for (Consumer cons : consumer) {
             try {
                 cons.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        return null;
+        return matrix;
     }
 
     public static double[][] generateMatrixParallelRows(int rows, int cols) {
-        return generateMatrixParallelRows(rows, cols, 1);
+        return generateMatrixParallelRows(rows, cols, 2);
     }
 
 }
