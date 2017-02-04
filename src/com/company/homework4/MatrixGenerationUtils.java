@@ -8,16 +8,31 @@ import java.util.Random;
 
 public class MatrixGenerationUtils {
 
-    public static double[][] generateMatrix(int rows, int cols) {
+    /****************************************************
+     * USE THIS METHOD FOR RANDOM GENERATION OF VALUE!
+     ****************************************************/
+     static double randomValue(Random random) {
+        double sum = 0;
+        int iterations = 20;
+        double MAX_VALUE = Double.MAX_VALUE / iterations;
+        for (int i = 0; i < iterations; i++) {
+            sum += random.nextDouble() % MAX_VALUE;
+        }
+        return sum;
+    }
+
+     public static double[][] generateMatrix(int rows, int cols) {
         Random random = new Random();
+
         double[][] matrix = new double[rows][cols];
 
-        for (int i = 0; i < matrix.length; i++)
+        for (int i = 0; i < matrix.length;i++)
             for (int j = 0; j < matrix[i].length; j++)
-                matrix[i][j] = random.nextDouble();
+                matrix[i][j] = randomValue(random);
 
         return matrix;
     }
+
 
     /**
      * Generate matrix in multiple threads
@@ -36,6 +51,7 @@ public class MatrixGenerationUtils {
         Consumer[] consumer = new Consumer[threadsCount];
         for (int i = 0; i < consumer.length; i++) {
             consumer[i] = new Consumer(conveyer);
+            consumer[i].start();
         }
         for (Consumer cons : consumer) {
             try {
@@ -46,9 +62,4 @@ public class MatrixGenerationUtils {
         }
         return matrix;
     }
-
-    public static double[][] generateMatrixParallelRows(int rows, int cols) {
-        return generateMatrixParallelRows(rows, cols, 2);
-    }
-
 }

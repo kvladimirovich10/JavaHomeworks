@@ -12,15 +12,11 @@ class Conveyor {
         currentstring = -1;
     }
 
-    public synchronized boolean iterates() {
-        if (currentstring < array.length - 1) {
-            currentstring++;
-            return true;
-        } else
-            return false;
+    public synchronized boolean hasNext() {
+        return currentstring < array.length - 1;
     }
-
-    public double[] current() {
+    public synchronized double[] next(){
+        currentstring++;
         return array[currentstring];
     }
 }

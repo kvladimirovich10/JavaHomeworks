@@ -5,7 +5,10 @@ import java.util.Random;
 /**
  * Created by Lomdji on 29.01.2017.
  */
-public class Consumer extends Thread {
+
+import static com.company.homework4.MatrixGenerationUtils.*;
+
+class Consumer extends Thread {
     private double values[];
     private Conveyor conveyor;
     Random random;
@@ -13,18 +16,18 @@ public class Consumer extends Thread {
     public Consumer(Conveyor conveyor) {
         this.conveyor = conveyor;
         random = new Random();
-        start();
     }
 
-    public void getNewArray(double[] array) {
+    private void getNewArray(double[] array) {
         values = array;
     }
 
+    @Override
     public void run() {
-        while (conveyor.iterates()) {
-            getNewArray(conveyor.current());
+        while (conveyor.hasNext()) {
+            getNewArray(conveyor.next());
             for (int i = 0; i < values.length; i++) {
-                values[i] = random.nextDouble();
+                values[i] = randomValue(random);
             }
         }
     }
