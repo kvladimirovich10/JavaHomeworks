@@ -5,9 +5,10 @@ package com.company.MetOpt;
  * Created by Lomdji on 25.02.2017.
  */
 public class PotentialCeil {
-    public boolean sign;
+    public int sign;
     public boolean markMin;
     public boolean markBase;
+    public boolean changedDirection;
     public double cost;
     public int X;
     public int i;
@@ -20,6 +21,7 @@ public class PotentialCeil {
         this.i=i;
         this.j=j;
         delataCost=0;
+        changedDirection=false;
         markMin=false;
     }
 }
