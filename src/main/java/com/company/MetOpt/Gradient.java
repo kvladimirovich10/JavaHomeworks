@@ -22,6 +22,8 @@ public class Gradient {
     private double[] x0;
     private double eps;
     private int CallsToFuncGrad = 0;
+    private int CallsToFuncDFP = 0;
+    private int CallsToFuncNSK = 0;
     private LinkedList<Double> AlphGrad;
     private double m;
 
@@ -97,6 +99,8 @@ public class Gradient {
             grad = gradient(res);
             IterationsStepest++;
         }
+        CallsToFuncNSK=CallsToFuncGrad;
+        CallsToFuncGrad=0;
         return res;
     }
 
@@ -128,13 +132,14 @@ public class Gradient {
         double[][] third;
         double alph;
         double innnerstep = 2 / (M + m);
+        //innnerstep=0.1;
         while (norm(gradientRes) >= eps) {
 
             //find xk+1
             gradientX=gradientRes;
             p = mult(B,gradientX);
-            //alph = dixotomy(innnerstep, x, p);
-            alph=0.1;
+            alph = dixotomy(innnerstep, x, p);
+            /*alph=0.1;*/
             res = summ(x, neg(mult(alph, p)));
 
             //find Sk
@@ -154,6 +159,8 @@ public class Gradient {
             IterationsDFP++;
             x = res;
         }
+        CallsToFuncDFP=CallsToFuncGrad;
+        CallsToFuncGrad=0;
         return res;
     }
 
@@ -192,8 +199,8 @@ public class Gradient {
 
     public void PrintIterrations() {
         System.out.println("Итерации градиент постоянный шаг: " + IterationsConstStep);
-        System.out.println("Итерации градиент наискорейший: " + IterationsStepest);
-        System.out.println("Итерации DFP: " + IterationsDFP);
+        System.out.println("Итерации градиент наискорейший: " + IterationsStepest + "  Дихотоми"+ CallsToFuncNSK);
+        System.out.println("Итерации DFP: " + IterationsDFP + "  Дихотоми"+ CallsToFuncDFP);
         System.out.println("Итерации Метода изменения масштабов: " + IterationsScaling);
     }
 
@@ -204,7 +211,7 @@ public class Gradient {
 
     public static void main(String[] args) {
         double[] x_start = {0, 0};
-        double eps = 0.01;
+        double eps = 0.001;
         double m = 2;
         double M = 75;
         Gradient method = new Gradient(x_start, eps, m, M);
