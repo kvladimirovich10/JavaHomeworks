@@ -56,23 +56,17 @@ public class ClipHyperplanes {
         return res;
     }
 
-    private double[] findA(Double[] x, ArrayList<Function<Double[], Double, Double, Double>> lim,
+    private Double[] findA(Double[] x, ArrayList<Function<Double[], Double, Double, Double>> lim,
                            ArrayList<Function<Double, Double, Double, Double>> limFunc) {
-        Double res[];
         int iMax = 0;
         double ValMax = Double.NEGATIVE_INFINITY;
         for (int i = 0; i < lim.size(); i++) {
-            if (limFunc.get(i).count(x[0], x[1], x[2]) > ValMax) {
+            if (limFunc.get(i).count(x[0], x[1], x[2]) >= ValMax) {
                 iMax = i;
                 ValMax = limFunc.get(i).count(x[0], x[1], x[2]);
             }
         }
-        res = lim.get(iMax).count(x[0], x[1], x[2]);
-        double res2[] = new double[lim.size()];
-        for (int j = 0; j < res2.length; j++) {
-            res2[j] = res[j];
-        }
-        return res2;
+        return lim.get(iMax).count(x[0], x[1], x[2]);
     }
 
     private double[] vectorFunctionfromB(ArrayList<Double> b, int strsize) {
@@ -89,7 +83,7 @@ public class ClipHyperplanes {
     private double[] vectorFunctionfromBAdditional(ArrayList<Double> b, int strsize) {
         double[] res = new double[b.size() + 2 * strsize];
         for (int i = 0; i < b.size(); i++) {
-            res[i] = -b.get(i);
+            res[i] =-b.get(i);
         }
         for (int i = b.size(); i < b.size() + strsize; i++) {
             res[i] = 0;
@@ -159,7 +153,7 @@ public class ClipHyperplanes {
         if (checkConditions(xCurr[0], xCurr[1], xCurr[2], limits))
             return xCurr;
         while (norm(xPrev, xCurr) >= eps) {
-            double a[]=findA(xCurr,limitsGradients,limits);
+            Double a[]=findA(xCurr,limitsGradients,limits);
             double tmp = 0;
             for (int i = 0; i != xCurr.length; i++) {
                 tmp += a[i] * xCurr[i];
@@ -167,6 +161,7 @@ public class ClipHyperplanes {
             double b = -aim.count(xCurr[0], xCurr[1], xCurr[2]) + tmp;
             bt.add(b);
             S.add((x, y, z) -> a[0] * x + a[1] * y + a[2] * z - b);
+            at.add(a);
             xPrev = xCurr.clone();
             solver = new Simplex_method(vectorFunctionfromBAdditional(bt, at.get(0).length), vectorFunctionfromB(bt, at.get(0).length),
                     ConstrainMatrix(at), GenArra(at.get(0).length, 0), GenArra(at.get(0).length, 1), generateCVect(at.get(0).length));
@@ -177,6 +172,6 @@ public class ClipHyperplanes {
 
     public static void main(String[] args) {
         ClipHyperplanes meth = new ClipHyperplanes(0.001);
-        meth.solve().toString();
+        System.out.println(meth.solve().toString());
     }
 }
