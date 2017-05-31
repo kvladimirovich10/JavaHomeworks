@@ -1,19 +1,43 @@
 package com.company.MetOpt;
 
 public class Simplex_method {
+    Simplex_method(double[] vector_functiont,double[] original_vector_functiont ,double[][] constraints_matrixt ,
+                   double[] constraints_matrix_additiont,double[] constraints_matrix_artificialt,double[] vector_right_partt ){
+        vector_function=vector_functiont;
+        original_vector_function=original_vector_functiont;
+        constraints_matrix_addition=constraints_matrix_additiont;
+        constraints_matrix=constraints_matrixt;
+        constraints_matrix_artificial=constraints_matrix_artificialt;
+        vector_right_part=vector_right_partt;
+    }
+    double[] RunSimpll(){
+        String[] Args = Method.create_enum_like_array(constraints_matrix,
+                constraints_matrix_addition,
+                constraints_matrix_artificial);
+        double[] result = Method.simplex_method(Args,
+                vector_function,
+                original_vector_function,
+                constraints_matrix,
+                constraints_matrix_addition,
+                constraints_matrix_artificial,
+                vector_right_part);
 
+        System.out.print("(X1...Xn,Y) = ");
+        Method.show_vector(result);
+        return result;
+    }
 
     //ПРЯМАЯ ЗАДАЧА
-    /*final static double[] vector_function = {0,0,0,0,0,0,0,0,0,0, 0,0,0, -1,-1, -1};    // {X1...XN* | U1...UM | W1...WM}
-    final static double[] original_vector_function = {0.6, 1.2, 1.8, 2.4, 3, 1.5, 3, 2.5, 2.1, 2.7,0,0,0};        // {X1...XN | U1...UM }
-    final static double[][] constraints_matrix = {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    static double[] vector_function = {0.6, 1.2, 1.8, 2.4, 3, 1.5, 3, 2.5, 2.1, 2.7, 0,0,0, -1,-1, -1};    // {X1...XN* | U1...UM | W1...WM}
+    static double[] original_vector_function = {0.6, 1.2, 1.8, 2.4, 3, 1.5, 3, 2.5, 2.1, 2.7, 0,0,0};        // {X1...XN | U1...UM }
+    static double[][] constraints_matrix = {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                                                   {0, 0, 0, 0, 0, 3, 6, -1, 3, 3},
                                                   {1, 2, 3, 4, 5, -2, -4, 0, -1, 0}};  //без U и W
-    final static double[] constraints_matrix_addition = {0, 0, 0};    // U в каждой строке по добавке, если нет - 0
-    final static double[] constraints_matrix_artificial = {1, 1, 1};     // W в каждой строке по добавке, если нет - 0
-    final static double[] vector_right_part = {100, 0, 0};        //  правая часть*/
+    static double[] constraints_matrix_addition = {0, 0, 0};    // U в каждой строке по добавке, если нет - 0
+    static double[] constraints_matrix_artificial = {1, 1, 1};     // W в каждой строке по добавке, если нет - 0
+    static double[] vector_right_part = {100, 0, 0};        //  правая часть*/
 
-    //ДВОЙСТВЕННАЯ ЗАДАЧА
+    /*ДВОЙСТВЕННАЯ ЗАДАЧА
     final static double[] vector_function = {0,0,0,0,0,0,   0,0,0,0,0,0,0,0,0,0,  -1,-1,-1,-1,-1,-1,-1,-1,-1,-1 };              // {X1...XN | U1...UM | W1...WM}
     final static double[] original_vector_function = {-100,100,0,0,0,0,   0,0,0,0,0,0,0,0,0,0};    // {X1...XN | U1...UM }
     final static double[][] constraints_matrix = {{1,-1, 0, 0, 1, -1},
@@ -219,7 +243,7 @@ class Method {
 
 
         //ДЛЯ ПРЯМОЙ ЗАДАЧИ
-        double[] result = new double[constraints_matrix[0].length + 1];
+        /*double[] result = new double[constraints_matrix[0].length + 1];
 
         for (int i = 0; i < posthor.length; i++) {
             int element = Method.find_position(i, Args, posthorArgs);
@@ -231,11 +255,11 @@ class Method {
             if (element < constraints_matrix[0].length)
                 result[element] = postsimplex_matrix_basis[i][postsimplex_matrix_basis[0].length - 1];
         }
-        result[result.length - 1] = postsimplex_matrix_basis[postsimplex_matrix_basis.length - 1][postsimplex_matrix_basis[0].length - 1];
+        result[result.length - 1] = postsimplex_matrix_basis[postsimplex_matrix_basis.length - 1][postsimplex_matrix_basis[0].length - 1];*/
 
 
         //ДЛЯ ДВОЙСТВЕННОЙ
-        /*double[] result = new double[constraints_matrix_addition.length + 1];
+        double[] result = new double[constraints_matrix_addition.length + 1];
 
         for (int i = 0 ; i < posthor.length ; i++) {
             int element = Method.find_position(i, Args, posthorArgs);
@@ -247,7 +271,7 @@ class Method {
             if (element >= constraints_matrix[0].length && element < constraints_matrix[0].length + constraints_matrix_addition.length)
                 result[element - constraints_matrix[0].length] = 0;
         }
-        result[result.length - 1] = postsimplex_matrix_basis[postsimplex_matrix_basis.length - 1][postsimplex_matrix_basis[0].length - 1];*/
+        result[result.length - 1] = postsimplex_matrix_basis[postsimplex_matrix_basis.length - 1][postsimplex_matrix_basis[0].length - 1];
         return result;
 
     }
